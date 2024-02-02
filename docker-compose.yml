@@ -1,0 +1,67 @@
+version: '3.8'
+volumes:
+  mysql:
+  redis:
+
+services:
+  redis:
+    image: redis:7.2.4-alpine3.19
+    container_name: redis
+    command: redis-server --requirepass loks666
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - chat_network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql
+    command: mysqld --default-authentication-plugin=caching_sha2_password
+    environment:
+      MYSQL_ROOT_PASSWORD: loks666
+      MYSQL_USER: webchat
+      MYSQL_PASSWORD: loks666
+      MYSQL_ROOT_HOST: '%'  # 允许所有主机连接
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./sql/webchat.sql:/docker-entrypoint-initdb.d/webchat.sql
+    networks:
+      - chat_network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ploks666" ]
+      timeout: 20s
+      retries: 10
+
+  webchat:
+    image: general9527/webchat:latest
+    container_name: webchat
+    ports:
+      - "8101:8101"
+    volumes:
+      - ./webchat/application.yml:/src/main/resources/application.yml
+      - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
+    networks:
+      - chat_network
+    depends_on:
+      - redis
+      - mysql
+
+networks:
+  chat_network:
+    name: chat_network
+
+
+
+
+
+
+

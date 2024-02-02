@@ -1,5 +1,5 @@
 -- 创建数据库 [MySQL]
-create database webchat;
+CREATE DATABASE `webchat` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_bin';
 use webchat;
 
 -- 用户信息主表

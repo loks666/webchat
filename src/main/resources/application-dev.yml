@@ -1,7 +1,6 @@
 # set server port
 server:
   port: 8101
-#  env: dev
   max-http-header-size: 8192
 
 # set enable swagger
@@ -9,12 +8,16 @@ swagger:
   enable: true
 
 spring:
+  # set freemarker config
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false
+
   # set mysql config
   datasource:
-    url: jdbc:mysql://localhost:3306/webchat?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mysql:3306/webchat?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: 123456
-
+    password: loks666
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 50
@@ -24,9 +27,10 @@ spring:
   # set redis config
   redis:
     timeout: 5000ms
-    host: 127.0.0.1
+    host: redis
     port: 6379
     database: 0
+    password: loks666
     jedis:
       pool:
         max-active: 100
@@ -41,5 +45,3 @@ logging:
   file:
     name: logs/app.log
     path: /var/log
-
-
