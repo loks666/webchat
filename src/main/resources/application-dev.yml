@@ -1,0 +1,45 @@
+# set server port
+server:
+  port: 8101
+#  env: dev
+  max-http-header-size: 8192
+
+# set enable swagger
+swagger:
+  enable: true
+
+spring:
+  # set mysql config
+  datasource:
+    url: jdbc:mysql://localhost:3306/webchat?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 50
+  jpa:
+    show-sql: true
+
+  # set redis config
+  redis:
+    timeout: 5000ms
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 100
+        max-wait: -1
+        min-idle: 10
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    com.com.webchat: DEBUG
+  file:
+    name: logs/app.log
+    path: /var/log
+
+

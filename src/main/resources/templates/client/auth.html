@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>在线聊天室登录认证</title>
+
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/client/auth.css">
+
+    <script src="/ref/jquery/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="/ref/layui-v2.6.8/layui/css/layui.css" type="text/javascript"></script>
+    <script src="/ref/layui-v2.6.8/layui/layui.js" type="text/javascript"></script>
+</head>
+<body>
+<center>
+
+        <div class="auth-container">
+
+            <img class="auth-image" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_2ab6315d398a43a4bc111fed7d35456b.png">
+            
+            <div class="auth-form-container" id="login-container">
+                <h2 class="loginbox-title">帐号登录</h2>
+                <input class="logininput" placeholder="手机号登录" id="login-mobile">
+                <input class="logininput" type="password" placeholder="密码" id="login-pwd">
+                <div class="day30Status">
+                    <input id="un-login" type="checkbox" name="un-login" class="un-login" checked>
+                    <label for="un-login">30天内免登录</label>
+                </div>
+                <button class="login-btn" onclick="invokeLoginServer()">登 录</button>
+                <p style="width: 350px; margin-top: 15px">
+                    <a class="forgetpwd" style="color: #d2d1d1">忘记密码</a>
+                    <a class="registry">注册新账号</a>
+                </p>
+                <div class="qrcode-login-icon" onmouseover="layer.tips('不支持扫码登录', this)" onmouseout="layer.closeAll()"></div>
+            </div>
+            <div class="auth-form-container" id="registry-container" style="display: none">
+                <h2 class="loginbox-title" style="margin-bottom: 10px">新账号注册</h2>
+                <input class="logininput" placeholder="昵称" id="registry-username">
+                <input class="logininput" placeholder="手机号" id="registry-mobile">
+                <input class="logininput" placeholder="验证码" id="registry-pic-code">
+                <img class="pic-valid-code" src="/api/valid-code/code" id="pic-valid-code">
+                <input class="logininput" type="password" placeholder="密码" id="registry-pwd">
+                <button class="login-btn" style="margin-top: 15px;" onclick="invokeRegistryServer()">立即注册</button>
+                <p style="width: 350px; margin-top: 15px">
+                    <a class="login">有账号去登录</a>
+                </p>
+            </div>
+        </div>
+    
+    
+        <img src="/image/icon/logo.png" class="logo">
+
+</center>
+</body>
+<script src="/js/client/auth.js" type="text/javascript"></script>
+</html>

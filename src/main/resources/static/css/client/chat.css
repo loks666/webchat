@@ -1,0 +1,494 @@
+body {
+    background-color: #e9f3fe;
+}
+.chat-container {
+    position: absolute;
+    width: 950px;
+    height: 600px;
+    left: 50%;
+    top: 50%;
+    margin-left: -475px;
+    margin-top: -350px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px #eeeded;
+    background-color: white;
+    border: 1px solid #e3e3e3;
+}
+.chat-left-menu-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 60px;
+    height: 100%;
+    background-color: #3787fb;
+}
+.chat-window-icon {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    width: 60px;
+    font-size: 10px;
+    color: #becee5;
+    font-weight: 600;
+    font-family: Courier;
+}
+.curr-user-photo {
+    position: absolute;
+    left: 10px;
+    top: 45px;
+    width: 35px;
+    height: 35px;
+    border-radius: 999px;
+    box-shadow: 0px 0px 10px #87b2f1;
+}
+.chat-menu-icon {
+    position: absolute;
+    left: 15px;
+    width: 20px;
+    border-radius: 999px;
+    padding: 5px;
+}
+.friend-list-icon {
+    top: 170px;
+}
+.chat-icon {
+    top: 120px;
+}
+.message-icon {
+    top: 220px;
+}
+.admin-icon {
+    bottom: 120px;
+}
+.logout-icon {
+    bottom: 50px;
+}
+.fun-icon:hover {
+    box-shadow: 2px 2px 5px #000 inset;
+}
+.selected-icon {
+    box-shadow: 2px 2px 5px #000 inset;
+}
+.new-message-icon {
+    position: absolute;
+    top: 217px;
+    left: 31px;
+    display: none;
+}
+.chat-list-container {
+    position: absolute;
+    left: 60px;
+    top: 0px;
+    width: 250px;
+    height: 100%;
+    border-right: 1px solid #e3e3e3;
+    background-color: #f6f6f6;
+}
+.chat-main-list-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+    overflow-y: scroll;
+}
+.apply-list-container {
+
+}
+.friend-list-container {
+
+}
+.friend-list-search-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    border-bottom: 1px solid whitesmoke;
+}
+.search-friend-input {
+    position: absolute;
+    left: 10px;
+    width: 190px;
+    height: 30px;
+    top: 10px;
+    text-indent: 10px;
+    border: 1px solid whitesmoke;
+    background-color: whitesmoke;
+    border-radius: 3px;
+}
+.add-friend-menu {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 32px;
+    width: 32px;
+    border: none;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+.chat-main-list-title {
+    position: relative;
+    width: 100%;
+    line-height: 45px;
+    text-align: left;
+    text-indent: 10px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+.deleteChatCardIcon {
+    position: absolute;
+    left: 0px;
+    top: 30px;
+    display: none;
+}
+.search-user-card {
+    position: relative;
+    width: 280px;
+    height: 100px;
+    border: 1px solid whitesmoke;
+    border-radius: 3px;
+}
+.search-user-photo {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    height: 60px;
+    width: 60px;
+    border-radius: 3px;
+}
+.search-username {
+    position: absolute;
+    top: 20px;
+    left: 90px;
+    font-weight: 500;
+    text-align: left;
+    font-size: 18px;
+}
+.search-mobile {
+    position: absolute;
+    top: 50px;
+    left: 90px;
+    text-align: left;
+    color: #666;
+}
+.applyAddUser {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    padding: 2px 5px;
+    font-size: 13px;
+    color: white;
+    background-color: orangered;
+    border: none;
+    border-radius: 10px 0px 0px 0px;
+}
+.apply-item {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #eeeeee;
+}
+.apply-item:hover {
+    cursor: pointer;
+    background-color: white;
+}
+.applyUserPhoto {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    height: 35px;
+    width: 35px;
+    border-radius: 3px;
+}
+.applyUserName {
+    position: absolute;
+    top: 14px;
+    left: 65px;
+    font-size: 14px;
+}
+.friendUserName {
+    position: absolute;
+    top: 18px;
+    left: 65px;
+    font-size: 14px;
+}
+.apply-pass {
+    position: absolute;
+    left: 100px;
+    bottom: 4px;
+    font-weight: 500;
+    color: #179d17;
+    font-size: 13px;
+}
+.apply-refuse {
+    position: absolute;
+    font-size: 13px;
+    left: 65px;
+    bottom: 4px;
+    font-weight: 500;
+    color: #cc4d09;
+}
+.chat-main-list-container::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 2px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.chat-main-list-container::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    background-color: #7ebdf1;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+}
+.chat-main-list-container::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0.2);
+    /*border-radius: 10px;*/
+    background: #EDEDED;
+}
+
+.chat-editor {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 200px;
+    width: 639px;
+    border-top: 1px solid whitesmoke;
+}
+.chat-editor-menu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 40px;
+    background-color: #fffdfd;
+    border-bottom: 1px solid #f6f6f6;
+}
+#chat-editor-input {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    height: 80px;
+    width: 639px;
+    padding: 10px;
+    resize: none;
+    border: none;
+    font-size: 14px;
+}
+.chat-enter-words {
+    position: absolute;
+    left: 30px;
+    bottom: 20px;
+    font-size: 13px;
+    color: #cccccc;
+}
+.chat-editor-menu-icon {
+    position: relative;
+    float: left;
+    margin-left: 30px;
+    margin-top: 11px;
+    color: gray;
+}
+.chat-mess-send-btn {
+    position: absolute;
+    right: 30px;
+    width: 120px;
+    border-radius: 3px;
+    height: 35px;
+    border: 0px;
+    background-color: transparent;
+    font-weight: 500;
+    bottom: 20px;
+    font-size: 13px;
+    color: #cbcbcb;
+}
+.chat-user-header {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 50px;
+    width: 639px;
+    border-bottom: 1px solid whitesmoke;
+    display: none;
+}
+#selectUserName {
+    position: absolute;
+    left: 40px;
+    top: 15px;
+    font-size: 14px;
+    color: black;
+}
+#selectUserSignature {
+    position: absolute;
+    left: 40px;
+    bottom: 6px;
+    font-size: 12px;
+    color: #969696;
+}
+.chat-set-icon {
+    position: absolute;
+    bottom: 60px;
+    left: 25px;
+    color: white;
+}
+.chat-set-icon:hover {
+    font-weight: 700;
+}
+.chat-user-card {
+    position: relative;
+    width: 237px;
+    height: 60px;
+    padding: 5px;
+    background-color: white;
+}
+.chat-user-card:hover {
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+.chat-user-card-photo {
+    position: absolute;
+    top: 17px;
+    height: 36px;
+    width: 36px;
+    border-radius: 999px;
+    left: 15px;
+}
+.chat-user-card-username {
+    position: absolute;
+    top: 15px;
+    left: 60px;
+    font-size: 15px;
+    color: black;
+    width: 72%;
+    text-align: left;
+}
+.chat-user-card-last-msg {
+    position: absolute;
+    bottom: 13px;
+    left: 60px;
+    font-size: 13px;
+    color: gray;
+    width: 140px;
+    text-align: left;
+}
+.chat-user-card-last-time {
+    position: absolute;
+    right: 10px;
+    bottom: 14px;
+    width: 80px;
+    background-color: transparent;
+    text-align: right;
+    font-size: 10px;
+    color: gray;
+}
+.chat-message-container {
+    position: absolute;
+    top: 50px;
+    right: 3px;
+    width: 620px;
+    height: calc(100% - 260px);
+    padding: 7px;
+    overflow-y: scroll;
+}
+.chat-message-container::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 1px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.chat-message-container::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    background-color: #006fff;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 15%, transparent 15%, transparent 10%, rgba(255, 255, 255, .2) 20%, rgba(255, 255, 255, .2) 55%, transparent 35%, transparent);
+}
+.chat-message-container::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(220, 220, 220, 0.2);
+    background: #f6f6f6;
+}
+.chat-mess-time {
+    position: relative;
+    line-height: 50px;
+    font-size: 13px;
+    color: #b4b4b4;
+    clear: both;
+    margin-top: 20px;
+}
+.unReadMessTag {
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-size: 5px;
+    color: white;
+    background-color: orangered;
+    position: relative;
+    float: right;
+    width: 25px;
+}
+.chat-mess-container {
+    position: relative;
+    width: 75%;
+    padding: 1px;
+    min-height: 40px;
+    height: auto;
+    margin-bottom: 20px;
+}
+.chat-mess-container.chat-mess-user {
+    float: left;
+}
+.chat-mess-container.chat-mess-me {
+    float: right;
+}
+.chat-mess-user .chat-mess-avatar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 2px;
+    width: 50px;
+    height: auto;
+}
+.chat-mess-me .chat-mess-avatar {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding: 2px;
+    width: 50px;
+    min-height: 50px;
+}
+.chat-mess-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+}
+.chat-mess-box {
+    position: relative;
+    max-width: calc(100% - 80px);
+    height: auto;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-align: left;
+    line-height: 22px;
+}
+.chat-mess-user .chat-mess-box {
+    float: left;
+    margin-left: 60px;
+    background-color: #ffe3d3;
+}
+.chat-mess-me .chat-mess-box {
+    float: right;
+    margin-right: 60px;
+    background-color: #dbf5ff;
+}
+.chat-mess-triangle-left {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 16px solid #ffe3d3;
+    border-bottom: 8px solid transparent;
+}
+.chat-mess-triangle-right {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 16px solid #dbf5ff;
+    border-bottom: 8px solid transparent;
+}

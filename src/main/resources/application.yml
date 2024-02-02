@@ -1,0 +1,28 @@
+# application.yml base config
+# spring boot project basic config
+spring:
+  application:
+    name: web-chat
+  profiles:
+    active: dev
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+    tomcat:
+      max-http-form-post-size: 100MB
+      max-connections: 10000
+      max-threads: 500
+  mvc:
+    favicon:
+      enabled:false
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    cache: false

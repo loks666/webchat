@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <title>在线聊天室登录认证</title>
+
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/client/chat.css">
+
+    <script src="/ref/jquery/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="/ref/layui-v2.6.8/layui/css/layui.css" type="text/javascript"></script>
+    <script src="/ref/layui-v2.6.8/layui/layui.js" type="text/javascript"></script>
+</head>
+<body>
+<center>
+    <div class="chat-container">
+        <div class="chat-left-menu-container">
+            <p class="chat-window-icon">
+                WebChat
+            </p>
+            <img class="curr-user-photo" id="curr-user-photo">
+
+            <a><img title="聊天会话" class="chat-menu-icon chat-icon fun-icon selected-icon" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_6309ed247a544cac8cb812d3b8e61d2f.png"></a>
+            <a><img title="好友列表" class="chat-menu-icon friend-list-icon fun-icon" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_b91980c31f6a4f6ca20e29b579d65ebd.png"></a>
+            <a><img title="消息提醒" class="chat-menu-icon message-icon fun-icon" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_b06158e70f0544749c62a3efc771843e.png"></a>
+            <a href="/admin" target="_blank" style="display: none" id="admin-icon"><img title="管理后台" class="chat-menu-icon admin-icon" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_b4d0496dbbaf486e994922150ecc2774.png"></a>
+            <a onclick="loginOut()"><img title="退出登录" class="chat-menu-icon logout-icon" src="http://coderutil.oss-cn-beijing.aliyuncs.com/bbs-image/file_d555969e726846e49d564b7a3e62ad54.png"></a>
+
+            <?xml version="1.0" encoding="UTF-8"?><svg class="new-message-icon" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 33C28.9706 33 33 28.9706 33 24C33 19.0294 28.9706 15 24 15C19.0294 15 15 19.0294 15 24C15 28.9706 19.0294 33 24 33Z" fill="#ff7070" stroke="#ff7070" stroke-width="4"/></svg>
+        </div>
+        <div class="chat-list-container">
+            <!-- 聊天列表 -->
+            <div class="chat-user-list-container chat-main-list-container" style="display: block">
+                <p class="chat-main-list-title">聊天会话列表</p>
+                <div class="chat-user-list" id="chat-user-list">
+
+                </div>
+            </div>
+            <!-- 好友列表 -->
+            <div class="friend-list-container chat-main-list-container">
+                <!-- 搜索好友, 添加好友 -->
+                <div class="friend-list-search-container">
+                    <input class="search-friend-input" id="search-username" placeholder="搜索好友">
+                    <button class="add-friend-menu" id="add-friend-menu">
+                        <?xml version="1.0" encoding="UTF-8"?><svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 20C22.866 20 26 16.866 26 13C26 9.13401 22.866 6 19 6C15.134 6 12 9.13401 12 13C12 16.866 15.134 20 19 20Z" fill="none" stroke="#6d6d6d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 40.8V42H34V40.8C34 36.3196 34 34.0794 33.1281 32.3681C32.3611 30.8628 31.1372 29.6389 29.6319 28.8719C27.9206 28 25.6804 28 21.2 28H16.8C12.3196 28 10.0794 28 8.36808 28.8719C6.86278 29.6389 5.63893 30.8628 4.87195 32.3681C4 34.0794 4 36.3196 4 40.8Z" fill="none" stroke="#6d6d6d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path fill-rule="evenodd" clip-rule="evenodd" d="M38 13V25V13Z" fill="none"/><path fill-rule="evenodd" clip-rule="evenodd" d="M32 19H44H32Z" fill="none"/><path d="M38 13V25M32 19H44" stroke="#6d6d6d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+                <div class="friend-list">
+
+                </div>
+            </div>
+            <!-- 好友列表 -->
+            <div class="apply-list-container chat-main-list-container">
+                <p class="chat-main-list-title">好友申请</p>
+                <div class="apply-unhandle-list">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 消息内容 -->
+        <div class="chat-message-container" id="chat-message-container"></div>
+        <!-- 消息编辑器 -->
+        <div class="chat-editor">
+            <!-- 消息编辑器菜单 -->
+            <div class="chat-editor-menu">
+                <a class="chat-editor-menu-icon" id="mess-emoji-menu" onclick="layer.msg('暂不支持表情')"><?xml version="1.0" encoding="UTF-8"?><svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M31 18V19" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 18V19" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 31C31 31 29 35 24 35C19 35 17 31 17 31" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <!-- 消息编辑器输入 -->
+            <textarea id="chat-editor-input" autofocus="autofocus" placeholder="发私信"></textarea>
+            <span class="chat-enter-words"><span id="input-words">0</span> / 500</span>
+            <button class="chat-mess-send-btn">按下Enter发送内容</button>
+        </div>
+        <!-- 选中私信的用户 头部信息区域 -->
+        <div class="chat-user-header" id="chat-user-header">
+            <a href="" target="_blank" id="selectUserCenterUrl"><span id="selectUserName"></span></a>
+        </div>
+    </div>
+
+    <img src="/image/icon/logo.png" class="logo">
+</center>
+</body>
+<script src="/js/client/auth.js" type="text/javascript"></script>
+<script src="/js/client/chat.js" type="text/javascript"></script>
+<script>
+    var me;
+    var userId;
+    var webSocket;
+    loadCurrUserInfo();
+    function loadCurrUserInfo() {
+        $.ajax({
+            url:"/api/user/getCurrentUserInfo",
+            type:"get",
+            success:function (data) {
+                data = eval(data);
+                if (data.success){
+                    $("#login-user").show();
+                    $("#login-menu").hide();
+                    data = data.data;
+                    me = data;
+                    userId = data.userId;
+                    $("#curr-user-photo").attr("src", data.photo+"?x-oss-process=image/resize,m_fill,w_40,h_40");
+                    if (data.roleCode == 2) {
+                        $("#admin-icon").show();
+                    }
+                    initWebSocket();
+                } else {
+                    location.href="/auth";
+                }
+            },error:function () {
+                location.href="/auth";
+            }
+        })
+    }
+
+    function initWebSocket() {
+        if ("WebSocket" in window) {
+            webSocket = new WebSocket("ws://"+wsHost+":"+wsPort+"/ws/chat/" + userId);
+            webSocket.onopen = function () {
+                console.log("已经连通了websocket");
+            };
+            //接收后台服务端的消息
+            webSocket.onmessage = function (evt) {
+                var mess = JSON.parse(evt.data);
+                console.log("接受到消息:"+mess);
+                showReceiverMsg(mess);
+            };
+            //连接关闭的回调事件
+            webSocket.onclose = function () {
+                console.log("连接已关闭...");
+            };
+        } else {
+            // 浏览器不支持 WebSocket
+            alert("您的浏览器不支持 WebSocket!");
+        }
+    }
+
+    function closeWebSocket() {
+        //直接关闭websocket的连接
+        webSocket.close();
+    }
+
+    function sendChatWebSocket(message) {
+        webSocket.send(message);
+    }
+
+    // 获取URL请求参数
+    function getUserParamByName(key) {
+        var url = window.location.search;
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var result = url.substr(1).match(reg);
+        return result ? decodeURIComponent(result[2]) : "";
+    }
+
+    function showReceiverMsg(chat) {
+        var message;
+        var sender = chat.sender;
+        var isMe = sender.userId == me.userId;
+        if (isMe) {
+            // 当前用户
+            message ="                <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                "                <div class=\"chat-mess-container chat-mess-me\">\n" +
+                "                    <div class=\"chat-mess-avatar\">\n" +
+                "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"chat-mess-triangle-right\"></div>\n" +
+                "                    <div class=\"chat-mess-box\">"+messContentEnCode(chat.message)+"</div>\n" +
+                "                </div>\n";
+        } else {
+            message =" <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                "                <div class=\"chat-mess-container chat-mess-user\">\n" +
+                "                    <div class=\"chat-mess-avatar\">\n" +
+                "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"chat-mess-triangle-left\"></div>\n" +
+                "                    <div class=\"chat-mess-box\">"+messContentEnCode(chat.message)+"</div>\n" +
+                "                </div>\n";
+        }
+        $("#chat-message-container").append(message);
+        // 刷新消息区滚动条
+        refreshChatMessContainerScrollBar2Bottom();
+        loadChat(false);
+    }
+
+    // 获取好友id
+    var chatId = getUserParamByName("chatid");
+    var chatUserListUrl;
+    if (chatId != '') {
+        chatUserListUrl = "/api/chat/mess/user.list?selectUser=" + chatId;
+    } else {
+        chatUserListUrl = "/api/chat/mess/user.list";
+    }
+    loadChat(true);
+    function loadChat(selectFirstUser) {
+        $("#chat-user-list").empty();
+        $.ajax({
+            url: chatUserListUrl,
+            type:"get",
+            success:function (data) {
+                data = eval(data);
+                if (data.success){
+                    if (data.data.length == 0) {
+                        $("#chat-user-list").append("<p style='line-height: 300px; color: gray'>暂无聊天记录</p>");
+                        return;
+                    }
+                    $.each(data.data, function (index, chatUser) {
+                        var user = chatUser.user;
+                        var firstChatCard = index == 0;
+                        if (selectFirstUser && firstChatCard) {
+                            selectChatUser(user.userId, user.userName, "无签名", true);
+                        }
+                        var unReadTag = chatUser.unReadMess ?
+                            "<span class='unReadMessTag' id='unreadTag-"+user.userId+"'>NEW</span>" : "";
+                        var chatUserCard = "<div class=\"chat-user-card\" id='card-"+user.userId+"'>\n" +
+                            "<a onclick=\"deleteChatCard('"+user.userId+"')\" class='deleteChatCardIcon'><?xml version=\"1.0\" encoding=\"UTF-8\"?><svg width=\"15\" height=\"15\" viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M8 8L40 40\" stroke=\"#424242\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M8 40L40 8\" stroke=\"#424242\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>"+
+                            "<a onclick=\"selectChatUser('"+user.userId+"', '"+user.userName+"', '无签名', true)\">" +
+                            "                    <img src=\""+user.photo+"\" class=\"chat-user-card-photo\">\n" +
+                            "                    <p class=\"chat-user-card-username\">"+user.userName+unReadTag+"</p>\n" +
+                            "                    <p class=\"chat-user-card-last-msg line1ppp\">"+codeContentEnCode(chatUser.lastMessage)+"</p>\n" +
+                            "                    <span class=\"chat-user-card-last-time\">"+formatMsgTime(chatUser.time)+"</span>\n" +
+                            "</a></div>";
+                        $("#chat-user-list").append(chatUserCard);
+                    })
+                }
+                $(".chat-user-card").hover(function(){
+                    $(this).children(".deleteChatCardIcon").show();
+                },function(){
+                    $(this).children(".deleteChatCardIcon").hide();
+                });
+            }
+        })
+    }
+    function selectChatUser(userId, userName, signature, focusUser) {
+        selectCardUserId = userId;
+        $("#selectUserName").html(userName+"  <span style='color: #afadad; font-size: 13px;'>(好友)</span>");
+        $("#selectUserCenterUrl").attr("href", "/coder?userid="+userId);
+        $("#chat-user-header").show();
+        // 加载消息
+        loadChatMessage();
+        $("#unreadTag-"+userId).hide();
+    }
+
+    function loadChatMessage() {
+        $("#chat-message-container").empty();
+        $.ajax({
+            url: "/api/chat/mess/query/"+selectCardUserId+"/100",
+            type:"get",
+            success:function (data) {
+                data = eval(data);
+                if (data.success){
+                    $.each(data.data, function (index, chat) {
+                        var message;
+                        var sender = chat.sender;
+                        var isMe = sender.userId == me.userId;
+                        if (chat.image != '' && chat.image != null) {
+                            if (isMe) {
+                                // 当前用户
+                                message =
+                                    "                <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                                    "                <div class=\"chat-mess-container chat-mess-me\">\n" +
+                                    "                    <div class=\"chat-mess-avatar\">\n" +
+                                    "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"chat-mess-triangle-right\"></div>\n" +
+                                    "                    <div class=\"chat-mess-box\">\n" +
+                                    "                        <img class=\"mess-image\" src=\""+chat.image+"?x-oss-process=image/resize,m_fill,w_100,h_100\">\n" +
+                                    "                    </div>\n" +
+                                    "                </div>";
+                            } else {
+                                message =
+                                    "                <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                                    "                <div class=\"chat-mess-container chat-mess-user\">\n" +
+                                    "                    <div class=\"chat-mess-avatar\">\n" +
+                                    "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"chat-mess-triangle-left\"></div>\n" +
+                                    "                    <div class=\"chat-mess-box\">\n" +
+                                    "                        <img class=\"mess-image\" src=\""+chat.image+"?x-oss-process=image/resize,m_fill,w_100,h_100\">\n" +
+                                    "                    </div>\n" +
+                                    "                </div>";
+                            }
+                        } else {
+                            if (isMe) {
+                                // 当前用户
+                                message ="                <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                                    "                <div class=\"chat-mess-container chat-mess-me\">\n" +
+                                    "                    <div class=\"chat-mess-avatar\">\n" +
+                                    "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"chat-mess-triangle-right\"></div>\n" +
+                                    "                    <div class=\"chat-mess-box\">"+messContentEnCode(chat.message)+"</div>\n" +
+                                    "                </div>\n";
+                            } else {
+                                message =" <p class=\"chat-mess-time\">"+formatMsgTime(chat.time)+"</p>\n" +
+                                    "                <div class=\"chat-mess-container chat-mess-user\">\n" +
+                                    "                    <div class=\"chat-mess-avatar\">\n" +
+                                    "                        <a href='/coder?userid="+sender.userId+"' target='_blank'><img src=\""+sender.photo+"?x-oss-process=image/resize,m_fill,w_50,h_50\"></a>\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"chat-mess-triangle-left\"></div>\n" +
+                                    "                    <div class=\"chat-mess-box\">"+messContentEnCode(chat.message)+"</div>\n" +
+                                    "                </div>\n";
+                            }
+                        }
+                        $("#chat-message-container").append(message);
+                    })
+                    // 刷新消息区滚动条
+                    refreshChatMessContainerScrollBar2Bottom();
+                }
+            }
+        })
+    }
+
+    function deleteChatCard(cardUserId) {
+        $("#card-"+cardUserId).remove();
+        if (cardUserId == selectCardUserId) {
+            $("#chat-user-header").hide();
+        }
+    }
+
+    /***
+     * 发送消息
+     */
+    $("#chat-editor-input").keydown(function(event) {
+        if (event.keyCode == 13) {
+            var content = $("#chat-editor-input").val();
+            if (content != '' && content.length > 500) {
+                layer.msg("消息内容上限500字");
+                return;
+            }
+            var meMess = buildTextMess(content);
+            content = content.replace(/\r\n/g,"<br>")
+            content = content.replace(/\n/g,"<br>");
+            content = content.replace(/"/g,"'");
+            if (content == '') {
+                layer.msg("消息内容为空");
+                return;
+            }
+            sendMeMess2Local(meMess);
+            var data = "{\"receiverId\":\""+selectCardUserId+"\", \"senderId\":\""+me.userId+"\", \"message\": \""+content+"\"}";
+
+            sendChatWebSocket(data);
+
+            $.ajax({
+                url:"/api/chat/mess/send",
+                type: "post",
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                data: data,
+                success:function (data) {
+                    data = eval(data);
+                    if (!data.success){
+                        layer.msg(data.msg);
+                    } else {
+                        loadChat(false);
+                    }
+                },error:function () {}
+            })
+        }
+    })
+
+    function sendMeMess2Local(meMess) {
+        $("#chat-message-container").append(meMess);
+        // 清空输入框
+        $("#chat-editor-input").val("");
+        // 刷新消息区滚动条
+        refreshChatMessContainerScrollBar2Bottom();
+    }
+
+    // 一进来就滚动到底部
+    $("#chat-message-container").scrollTop($("#chat-message-container")[0].scrollHeight);
+    // 刷新消息区滚动态到底部
+    function refreshChatMessContainerScrollBar2Bottom() {
+        $("#chat-message-container").scrollTop($("#chat-message-container")[0].scrollHeight);
+    }
+
+    function buildTextMess(message) {
+        message = messContentEnCode(message);
+        return "<p class=\"chat-mess-time\">刚刚</p>\n" +
+            "              <div class=\"chat-mess-container chat-mess-me\">\n" +
+            "                    <div class=\"chat-mess-avatar\">\n" +
+            "                        <img src=\""+me.photo+"\">\n" +
+            "                    </div>\n" +
+            "                    <div class=\"chat-mess-triangle-right\"></div>\n" +
+            "                    <div class=\"chat-mess-box\">"+message+"</div>\n" +
+            "             </div>\n";
+    }
+</script>
+</html>

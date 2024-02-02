@@ -1,0 +1,112 @@
+body {
+    background-color: whitesmoke;
+}
+.auth-container {
+    position: absolute;
+    width: 1100px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -550px;
+    margin-top: -300px;
+}
+.auth-image {
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    width: 650px;
+}
+.auth-form-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 400px;
+    height: 488px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px 0 rgb(0 0 0 / 10%);
+    pointer-events: all;
+}
+.loginbox-title {
+    padding: 48px 0 0;
+    color: #141414;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.logininput {
+    position: relative;
+    width: 350px;
+    height: 50px;
+    border-radius: 6px;
+    border: 1px solid #d9dbe0;
+    margin: 15px 0px 0px 0px;
+    text-indent: 15px;
+    font-size: 16px;
+    font-family: Courier;
+    line-height: 50px;
+}
+.day30Status {
+    height: 25px;
+    margin-top: 15px;
+    text-align: left;
+    width: 350px;
+    font-size: 14px;
+}
+.login-btn {
+    position: relative;
+    bottom: 0px;
+    width: 350px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    border: none;
+    border-radius: 4px;
+    background: #3370FF;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-top: 30px;
+}
+.login-btn:hover {
+    cursor: pointer;
+    background: #4f7ff1;
+}
+.forgetpwd, .registry, .login {
+    position: relative;
+    float: none;
+    color: #585E6D;
+    font-size: 14px;
+    line-height: 20px;
+    margin-right: 18px;
+}
+.forgetpwd:after {
+    content: '';
+    padding-left: 1px;
+    width: 0;
+    height: 13px;
+    background-color: #B7BCC7;
+    position: absolute;
+    top: 3px;
+    right: -10px;
+    color: #666;
+}
+.qrcode-login-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 72px;
+    height: 72px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQBAMAAAAVaP+LAAAAElBMVEVHcEx6pf96pf96o/96o/97o/8Pt1s1AAAABXRSTlMAfz/dXxFC4+EAAAEeSURBVGje7djRbcJAEEXReYgO0DSAlApcAiWg7b8VfpwI22sSdm8sVnr3M6CjQZDJhAjnnHMDlqWUiCjraj97emybKCiSgkRBkRQkCoqkIFFQvICqTzwE2sMNfTSU+2//4oP4KyQKWo/UDomCViN1QKKg5Ug90Ok6l53QT1+GXnSbpgmBVMqdeWlJQaKgSAoSBcVlAzXu7DMFhaFDIWH3Ubaffn+6vd+Hdm7vBkgUVL+9WyBRUHwk5Aat/j+goc2hS0CioPqXOdE4EgJV/6BE40gM5Eb+rvL5d6UZEgV9j9QPiYLmkQBIFLRcldE7EgEtVmX0joRA86oEErYZk4KE7eqkIP3HwWRoJCgpSNg1khQk7D7yXhp3LznnnDuqB9Ji/xpvUnncAAAAAElFTkSuQmCC) 50% no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+.pic-valid-code {
+    position: absolute;
+    right: 50px;
+    bottom: 215px;
+}

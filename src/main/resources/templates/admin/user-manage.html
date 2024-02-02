@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="referrer" content="no-referrer">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/css/common/common.css" rel="stylesheet" type="text/css" />
+    <link href="/css/admin/console.css" rel="stylesheet" type="text/css"/>
+    <link href="/ref/layui-v2.6.8/layui/css/layui.css" rel="stylesheet" type="text/css" />
+    <script src="/ref/layui-v2.6.8/layui/layui.js" type="text/javascript"></script>
+    <script src="/ref/jquery/jquery-3.4.1.js" type="text/javascript"></script>
+
+    <style>
+        .search-condition-elem {
+            width: 170px;
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden">
+<center>
+    <div class="search-condition-module">
+        <select class="search-condition-elem"  id="role-code">
+            <option value="">全部状态</option>
+            <option value="1">普通用户</option>
+            <option value="2">管理员</option>
+            <option value="3">黑名单</option>
+        </select>
+        <button class="btn" style="left: 300px" id="search-btn" onclick="loadUserInFlow()">检索</button>
+    </div>
+
+    <table class="account-apply-tab layui-table" id="search-result-tab">
+        <thead>
+        <tr>
+            <th style="width: 50px">UID</th>
+            <th style="width: 50px">头像</th>
+            <th style="width: 70px">手机号</th>
+            <th style="width: 100px">用户名</th>
+            <th style="width: 60px">角色</th>
+            <th style="width: 200px">注册时间</th>
+            <th style="width: 100px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div id="page"></div>
+</center>
+</body>
+<script>
+
+    var firstSearch = true;
+    var curr = 0, size = 10, total = 0;
+    loadUserInFlow();
+    function loadUserInFlow() {
+        $.ajax({
+            url:"/api/user/getUserList?roleCode="+$("#role-code").val()+"&pageNo="+(curr == 0 ? 1 : curr)+"&pageSize="+size,
+            type:"get",
+            success:function (data) {
+                data = eval(data);
+                $("#search-result-tab").children("tbody").empty();
+                if (data.success){
+                    $.each(data.data, function (index, value) {
+                        var roleName = "普通用户";
+                        if (value.roleCode == 2) {
+                            roleName = "管理员";
+                        } else if (value.roleCode == 3) {
+                            roleName = "黑名单";
+                        }
+                        var addBlackListRoleBtn =
+                            "<button class=\"layui-btn layui-btn-sm layui-btn-normal\" onclick=\"addBlackListRole('"+value.userId+"')\">加入黑名单</button>";
+                        var cancelBlackListRoleBtn =
+                            "<button class=\"layui-btn layui-btn-sm layui-btn-normal\" onclick=\"cancelBlackListRole('"+value.userId+"')\">撤销黑名单</button>";
+                        var upgradeAdminRoleBtn =
+                            "<button class=\"layui-btn layui-btn-sm layui-btn-warm\" onclick=\"upgradeAdminRole('"+value.userId+"')\">升级管理员</button>";
+                        var cancelAdminRoleBtn =
+                            "<button class=\"layui-btn layui-btn-sm layui-btn-warm\" onclick=\"cancelAdminRole('"+value.userId+"')\">取消管理员权限</button>";
+                        var tr = "<tr>"+
+                            "<td>"+value.userId+"</td>"+
+                            "<td><img style='height: 40px' src='"+value.photo+"'></td>"+
+                            "<td>"+value.mobile+"</td>"+
+                            "<td>"+value.userName+"</td>"+
+                            "<td>"+roleName+"</td>"+
+                            "<td>"+value.registryTimeStr+"</td>"+
+                            "<td style='width: 200px;'>";
+                            if (value.roleCode == 1) {
+                                // 普通用户可以升级管理员或者加入黑名单
+                                tr += addBlackListRoleBtn;
+                                tr += upgradeAdminRoleBtn;
+                            } else if (value.roleCode == 2) {
+                                // 管理员=》取消管理员角色
+                                tr += cancelAdminRoleBtn;
+                            } else if (value.roleCode == 3) {
+                                // 黑名单=》取消黑名单角色
+                                tr += cancelBlackListRoleBtn;
+                            }
+                            tr += "</td></tr>";
+                        if (!firstSearch) {
+                            $("#search-result-tab").children("tbody").append(tr);
+                        }
+                    })
+                    if (curr == 0 || data.total != total) {
+                        curr = 1;
+                        firstSearch = false;
+                        total = data.total;
+                        initPage();
+                    }
+                } else {
+                    layer.msg(data.msg);
+                }
+            },error:function () {}
+        })
+    }
+
+    function initPage() {
+        layui.use('laypage', function(){
+            var laypage = layui.laypage;
+            laypage.render({
+                elem: 'page',
+                count: total,
+                limit: size,
+                curr: curr,
+                jump: function(obj){
+                    curr = obj.curr;
+                    loadUserInFlow();
+                }
+            });
+        })
+    }
+
+    function addBlackListRole(userId) {
+        var api = "/api/user/addBlackListRole/"+userId;
+        updateUserRole(api);
+    }
+
+    function cancelBlackListRole(userId) {
+        var api = "/api/user/setNormalUserRole/"+userId;
+        updateUserRole(api);
+    }
+
+    function upgradeAdminRole(userId) {
+        var api = "/api/user/upgradeAdminRole/"+userId;
+        updateUserRole(api);
+    }
+
+    function cancelAdminRole(userId) {
+        var api = "/api/user/setNormalUserRole/"+userId;
+        updateUserRole(api);
+    }
+
+    function updateUserRole(api) {
+        $.ajax({
+            url: api,
+            type: "post",
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success:function (data) {
+                data = eval(data);
+                if (data.success){
+                    layer.msg("操作成功");
+                    loadUserInFlow();
+                } else {
+                    layer.msg(data.msg);
+                }
+            },error:function () {
+                layer.msg("服务端异常");
+            }
+        })
+    }
+</script>
+<style>
+    .layui-laypage a, .layui-laypage span {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: middle;
+        padding: 3px 13px;
+        height: 28px;
+        line-height: 28px;
+        margin: 0px 5px;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #4e6ef2;
+        font-size: 14px;
+        border: none;
+    }
+    .layui-laypage a:hover, .layui-laypage span:hover {
+        background: #4e6ef2;
+        color: #fff;
+    }
+    .layui-laypage .layui-laypage-curr .layui-laypage-em {
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        padding: 1px;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        background: #4e6ef2;
+        color: #fff;
+        font-weight: normal;
+    }
+    .layui-laypage-next, .layui-laypage-prev {
+        border-radius: 4px;
+    }
+    .layui-laypage-default {
+        float: right;
+    }
+</style>
+</html>
