@@ -61,6 +61,7 @@ WebChat目前的线上版本: https://webchat.superxiang.com
 
 > **收藏项目**，你将从 GitHub 上无延迟地接收所有发布通知～⭐️
 </div>
+
 ## 🛳 开箱即用
 > 有关 Docker
 > 部署的详细说明，详见 [📘 使用 Docker 部署](https://github.com/loks666/webchat/wiki/Docker-Deployment.zh-CN)  
