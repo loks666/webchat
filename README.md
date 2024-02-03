@@ -1,4 +1,4 @@
-<div id="readme-top" style="text-align:center">
+<div style="text-align:center" id="readme-top" >
 
 <img height="350" src="./images/logo.png" alt="WebChat Logo">
 
