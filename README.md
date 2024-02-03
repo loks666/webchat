@@ -1,6 +1,5 @@
-<div style="text-align:center">
 <div id="readme-top" ></div>
-
+<div align="center">
 
 <img height="350" src="./images/logo.png" alt="WebChat Logo">
 
@@ -22,7 +21,7 @@ Web Chat 是开源的聊天系统，支持一键免费部署私人Chat网页的�
 
 [![][share-telegram-shield]][share-telegram-link]
 [![][share-weibo-shield]][share-weibo-link]
-- 首页
+
 ![](./images/webchat.png)
 ![](./images/login.png)
 ![](./images/console.png)
