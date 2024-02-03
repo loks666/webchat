@@ -231,7 +231,7 @@ This project is [MIT](./LICENSE) licensed.
 [docker-size-shield]: https://img.shields.io/docker/image-size/general9527/webchat/latest?color=369eff&labelColor=black&style=flat-square
 
 
-[fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-chat
+[fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Floks666%2Fwebchat/refs/branch/master/1ea8120312c4f9353a98c691784dc90576123695
 
 [fossa-license-shield]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-chat.svg?type=large
 
