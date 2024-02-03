@@ -1,10 +1,14 @@
+<a name="readme-top"></a>
+
 <div id="readme-top" style="text-align:center">
 
 <img height="350" src="./images/logo.png" alt="WebChat Logo">
 
-Web Chat 是开源的聊天系统，支持一键免费部署私人Chat网页的应用程序。
+[//]: # (<h1>Web Chat</h1>)
 
-**简体中文** · [English](./README.en.md)  · [报告问题][github-issues-link] · [请求功能][github-issues-link]
+Web Chat is an open-source chat system, supporting one-click free deployment of private Chat web applications.
+
+**English** · [简体中文](./README.md)  · [Report Issues][github-issues-link] · [Request Features][github-issues-link]
 
 <!-- SHIELD GROUP -->
 
@@ -16,30 +20,27 @@ Web Chat 是开源的聊天系统，支持一键免费部署私人Chat网页的�
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-**分享 WebChat 给你的好友**
+**Share WebChat with your friends**
 
 [![][share-telegram-shield]][share-telegram-link]
 [![][share-weibo-shield]][share-weibo-link]
-- 首页
+
 ![](./images/webchat.png)
-![](./images/login.png)
-![](./images/console.png)
-![](./images/audit.png)
 
 </div>
 <details>
-<summary><kbd>目录树</kbd></summary>
+<summary><kbd>Table of Contents</kbd></summary>
 
 #### TOC
 
-- [👋🏻 开始使用 & 交流](#-开始使用--交流)
-- [🛳 开箱即用](#-开箱即用)
-    - [`A` 使用 Docker 部署](#a-使用-docker-部署)
-    - [`B` 使用 Docker-compose 部署](#b-使用Docker-compose 部署)
-    - [`C` 使用 Jar包 本地部署](#c-使用 Jar包 本地部署)
-- [⌨️ 本地开发](#️-本地开发)
-- [🤝 参与贡献](#-参与贡献)
-- [🔗 更多工具](#-更多工具)
+- [👋🏻 Getting Started & Communication](#-getting-started--communication)
+- [🛳 Ready to Use](#-ready-to-use)
+    - [`A` Deployment with Docker](#a-deployment-with-docker)
+    - [`B` Deployment with Docker-compose](#b-deployment-with-docker-compose)
+    - [`C` Local Deployment with Jar Package](#c-local-deployment-with-jar-package)
+- [⌨️ Local Development](#️-local-development)
+- [🤝 Contributing](#-contributing)
+- [🔗 More Tools](#-more-tools)
 
 ####
 
@@ -47,63 +48,61 @@ Web Chat 是开源的聊天系统，支持一键免费部署私人Chat网页的�
 
 </details>
 
-## 👋🏻 开始使用 & 交流
+## 👋🏻 Getting Started & Communication
 
-WebChat目前的线上版本: https://webchat.superxiang.com 
-有需求或者问题，欢迎提交 [issues][issues-link]
+The current online version of WebChat: https://webchat.superxiang.com 
+For requirements or problems, feel free to submit [issues][issues-link]
 
-| [![][chat-shield-badge]][chat-link]       | 访问WebChat，快速体验                                  |
+| [![][chat-shield-badge]][chat-link]       | Visit WebChat for quick experience                                  |
 |:------------------------------------------|:------------------------------------------------|
-| [![][discord-shield-badge]][discord-link] | 加入我们的 Discord 社区！这是你可以与开发者和其他 WebChat 热衷用户交流的地方 |
-| [![][qq-shield-badge]][qq-link]           | 加入我们的 QQ 群！欢迎开发讨论                               |
+| [![][discord-shield-badge]][discord-link] | Join our Discord community! This is where you can communicate with developers and other WebChat enthusiasts |
+| [![][qq-shield-badge]][qq-link]           | Join our QQ group! Welcome to discuss development                               |
 
+> **Star the project**, you will receive all release notifications from GitHub with no delay～⭐️
 
-> **收藏项目**，你将从 GitHub 上无延迟地接收所有发布通知～⭐️
-
-## 🛳 开箱即用
-> 有关 Docker
-> 部署的详细说明，详见 [📘 使用 Docker 部署](https://github.com/loks666/webchat/wiki/Docker-Deployment.zh-CN)  
+## 🛳 Ready to Use
+> For detailed instructions on Docker deployment, see [📘 Deploy with Docker](https://github.com/loks666/webchat/wiki/Docker-Deployment.zh-CN)  
 <br/>
-WebChat 提供了  [Docker 镜像][docker-release-link]，这使你可以在几分钟内构建自己的聊天服务，无需任何基础知识。
+WebChat provides a [Docker image][docker-release-link], allowing you to build your own chat service in minutes without any basic knowledge.
 
 <br/>
 
-### `A` 使用 Docker 部署
+### `A` Deployment with Docker
 
-我们提供了 Docker 镜像，供你在自己的私有设备上部署 WebChat 服务。使用以下命令即可使用一键启动 WebChat 服务：
+We provide a Docker image for you to deploy the WebChat service on your own private device. Use the following command to start the WebChat service with one click:
 ```fish
 docker run -d --name webchat -p 8101:8101 general9527/webchat:customer
 ```
-注意：请将你的数据库root密码和redis修改为loks666，程序才能正确使用，如果你的mysql和redis都是使用容器启动的，那么需要使用--network选项来指定网络
+Note: Please change your database root password and redis to loks666, so the program can use it correctly. If your mysql and redis are started using containers, you need to use the --network option to specify the network.
 
 ```fish
-docker run -d --name webchat --network ‘你的网络名’ -p 8101:8101 general9527/webchat:customer
+docker run -d --name webchat --network ‘your network name’ -p 8101:8101 general9527/webchat:customer
 ```
-### `B` 使用 Docker-compose 部署
+### `B` Deployment with Docker-compose
 
 [![][docker-release-shield]][docker-release-link]
 [![][docker-size-shield]][docker-size-link]
 [![][docker-pulls-shield]][docker-pulls-link]  
 
-本项目目前有三个tag，分别为latest，customer和v1.0  
-1. latest：打包方式为jar包打入，所以不支持修改配置:mysql和redis的密码都是loks666，mysql用户是root  
-2. customer：打包方式为dockerfile打包，支持修改配置:可以修改mysql和redis的配置需添加下面的配置
+This project currently has three tags, namely latest, customer and v1.0  
+1. latest: The packaging method is to put in the jar package, so it does not support modifying the configuration: the passwords of mysql and redis are both loks666, and the mysql user is root  
+2. customer: The packaging method is dockerfile packaging, which supports modifying the configuration: you can modify the configuration of mysql and redis and need to add the following configuration
 
 ```fish
    volumes:
      - ./webchat/application.yml:/src/main/resources/application.yml
      - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
 ```
-3. v1.0：为远古版本，可以忽略  
+3. v1.0: For ancient versions, it can be ignored  
 ---
-- 使用项目根目录下的docker-compose 一键部署(推荐)  
-注意：一键部署包含redis和mysql服务，请检查部署前是否有这两个服务
+- Use docker-compose in the project root directory for one-click deployment (recommended)  
+Note: One-click deployment includes redis and mysql services, please check whether these two services exist before deployment
 
 ```fish
     cd webchat
     docker-compose up -d
 ```
-- webchat 独立部署(已有mysql和redis的情况)
+- Webchat standalone deployment (in the case of existing mysql and redis)
 
 ```fish
     version: '3.8'
@@ -127,10 +126,10 @@ docker run -d --name webchat --network ‘你的网络名’ -p 8101:8101 genera
       chat_network:
         name: chat_network
 ```
-部署前请将application-dev.yml中redis和mysql的配置改为自己的配置
+Before deployment, please change the configuration of redis and mysql in application-dev.yml to your own configuration
 
-### `C` 使用 Jar包 本地部署
-> 建议使用Idea插件编译打包，如果使用命令，需配置maven环境到系统环境变量中
+### `C` Local Deployment with Jar Package
+> It is recommended to use the Idea plugin to compile and package. If you use commands, you need to configure the maven environment into the system environment variables.
 ```fish
     cd webchat
     mvn clean package
@@ -139,9 +138,9 @@ docker run -d --name webchat --network ‘你的网络名’ -p 8101:8101 genera
 <br/>
 
 
-## ⌨️ 本地开发
+## ⌨️ Local Development
 
-使用以下命令进行本地开发：
+Use the following commands for local development:
 
 ```fish
 $ git clone https://github.com/loks666/webchat.git
@@ -155,20 +154,20 @@ $ java -jar webchat.jar
 
 </div>
 
-## 🤝 参与贡献
+## 🤝 Contributing
 
-我们非常欢迎各种形式的贡献。如果你对贡献代码感兴趣，可以查看我们的 GitHub [Issues][github-issues-link]
-和 [Projects][github-project-link]，大展身手，向我们展示你的奇思妙想。
+We warmly welcome all forms of contributions. If you are interested in contributing code, you can check out our GitHub [Issues][github-issues-link]
+and [Projects][github-project-link], show off your ideas and talents.
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
 ----
 
-## 🔗 更多工具
+## 🔗 More Tools
 
-- [🌏 Guide][guide] : 网站导航，首页包括作者的所有作品与服务
-- [🤯 Fly AI][Fly AI] : 一个无需魔法即可使用的AI网站，支持ChatGPT/LLM模型的应用程序。以及midjourney绘图等功能
-- [💌 Fly API][flyapi] : 一个Open AI API KEY的分发网站，可以分享自己的key给他人使用
+- [🌏 Guide][guide] : Website navigation, the homepage includes all the works and services of the author
+- [🤯 Fly AI][Fly AI] : An AI website that can be used without magic, supporting the application of ChatGPT/LLM models. As well as midjourney drawing and other functions
+- [💌 Fly API][flyapi] : A distribution website for Open AI API KEY, you can share your key with others
 
 <div style="text-align:right">
 
@@ -186,8 +185,6 @@ $ java -jar webchat.jar
 
 Copyright © 2023 [WebChat][profile-link]. <br />
 This project is [MIT](./LICENSE) licensed.
-
-<!-- LINK GROUP -->
 
 [github-release-shield]: https://img.shields.io/github/v/release/loks666/webchat?color=369eff&labelColor=black&logo=github&style=flat-square
 
