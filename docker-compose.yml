@@ -42,7 +42,7 @@ services:
       retries: 10
 
   webchat:
-    image: general9527/webchat:latest
+    image: general9527/webchat:customer
     container_name: webchat
     ports:
       - "8101:8101"
@@ -58,10 +58,6 @@ services:
 networks:
   chat_network:
     name: chat_network
-
-
-
-
 
 
 
