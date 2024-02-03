@@ -1,10 +1,7 @@
-<a name="readme-top"></a>
-
-<div id="readme-top" style="text-align:center">
+<div id="readme-top" ></div>
+<div align="center">
 
 <img height="350" src="./images/logo.png" alt="WebChat Logo">
-
-[//]: # (<h1>Web Chat</h1>)
 
 Web Chat is an open-source chat system, supporting one-click free deployment of private Chat web applications.
 
@@ -26,6 +23,9 @@ Web Chat is an open-source chat system, supporting one-click free deployment of 
 [![][share-weibo-shield]][share-weibo-link]
 
 ![](./images/webchat.png)
+![](./images/login.png)
+![](./images/console.png)
+![](./images/audit.png)
 
 </div>
 <details>
