@@ -63,7 +63,22 @@ For requirements or problems, feel free to submit [issues][issues-link]
 ## 🛳 Ready to Use
 > For detailed instructions on Docker deployment, see [📘 Deploy with Docker](https://github.com/loks666/webchat/wiki/Docker-Deployment.zh-CN)  
 <br/>
-WebChat provides a [Docker image][docker-release-link], allowing you to build your own chat service in minutes without any basic knowledge.
+WebChat provides a [Docker image][docker-release-link], allowing you to build your own chat service in minutes without any basic knowledge.  
+> 
+This project currently has three tags, namely latest, customer and v1.0  
+1. latest: The packaging method is to put in the jar package, so it does not support modifying the configuration: the passwords of mysql and redis are both loks666, and the mysql user is root  
+2. customer: The packaging method is dockerfile packaging, which supports modifying the configuration: you can modify the configuration of mysql and redis and need to add the following configuration
+
+  ```fish
+     volumes:
+       - ./webchat/application.yml:/src/main/resources/application.yml
+       - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
+  ```
+3. v1.0: For ancient versions, it can be ignored  
+---
+> The database initialization script for this project is located in sql/webcaht.sql. It can be directly imported into MySQL, or you can use docker-compose for one-click deployment, which will automatically initialize the database.
+
+> There will be three initial users; admin (administrator), user1 (ordinary user), and audit2 (ordinary user). The password for all these users is 123456.
 
 <br/>
 
@@ -84,17 +99,7 @@ docker run -d --name webchat --network ‘your network name’ -p 8101:8101 gene
 [![][docker-size-shield]][docker-size-link]
 [![][docker-pulls-shield]][docker-pulls-link]  
 
-This project currently has three tags, namely latest, customer and v1.0  
-1. latest: The packaging method is to put in the jar package, so it does not support modifying the configuration: the passwords of mysql and redis are both loks666, and the mysql user is root  
-2. customer: The packaging method is dockerfile packaging, which supports modifying the configuration: you can modify the configuration of mysql and redis and need to add the following configuration
 
-```fish
-   volumes:
-     - ./webchat/application.yml:/src/main/resources/application.yml
-     - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
-```
-3. v1.0: For ancient versions, it can be ignored  
----
 - Use docker-compose in the project root directory for one-click deployment (recommended)  
 Note: One-click deployment includes redis and mysql services, please check whether these two services exist before deployment
 

@@ -66,10 +66,22 @@ WebChat目前的线上版本: https://webchat.superxiang.com
 > 有关 Docker
 > 部署的详细说明，详见 [📘 使用 Docker 部署](https://github.com/loks666/webchat/wiki/Docker-Deployment.zh-CN)  
 <br/>
-WebChat 提供了  [Docker 镜像][docker-release-link]，这使你可以在几分钟内构建自己的聊天服务，无需任何基础知识。
+WebChat 提供了  [Docker 镜像][docker-release-link]，这使你可以在几分钟内构建自己的聊天服务，无需任何基础知识。  
 
-<br/>
+> 本项目的数据库初始化脚本在sql/webcaht.sql中，可以直接导入到mysql中，也可以使用docker-compose一键部署，会自动初始化数据库  
 
+> 会有三个初始化用户，admin(管理员)，user1(普通用户)，audit2(普通用户)，密码都是123456
+
+> 本项目目前有三个tag，分别为latest，customer和v1.0  
+1. latest：打包方式为jar包打入，所以不支持修改配置:mysql和redis的密码都是loks666，mysql用户是root  
+2. customer：打包方式为dockerfile打包，支持修改配置:可以修改mysql和redis的配置需添加下面的配置
+
+```fish
+   volumes:
+     - ./webchat/application.yml:/src/main/resources/application.yml
+     - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
+```
+3. v1.0：为远古版本，可以忽略 
 ### `A` 使用 Docker 部署
 
 我们提供了 Docker 镜像，供你在自己的私有设备上部署 WebChat 服务。使用以下命令即可使用一键启动 WebChat 服务：
@@ -87,16 +99,7 @@ docker run -d --name webchat --network ‘你的网络名’ -p 8101:8101 genera
 [![][docker-size-shield]][docker-size-link]
 [![][docker-pulls-shield]][docker-pulls-link]  
 
-本项目目前有三个tag，分别为latest，customer和v1.0  
-1. latest：打包方式为jar包打入，所以不支持修改配置:mysql和redis的密码都是loks666，mysql用户是root  
-2. customer：打包方式为dockerfile打包，支持修改配置:可以修改mysql和redis的配置需添加下面的配置
 
-```fish
-   volumes:
-     - ./webchat/application.yml:/src/main/resources/application.yml
-     - ./webchat/application-dev.yml:/src/main/resources/application-dev.yml
-```
-3. v1.0：为远古版本，可以忽略  
 ---
 - 使用项目根目录下的docker-compose 一键部署(推荐)  
 注意：一键部署包含redis和mysql服务，请检查部署前是否有这两个服务
