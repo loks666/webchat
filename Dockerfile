@@ -1,5 +1,8 @@
-## 使用 OpenJDK 镜像
+# 使用 OpenJDK 镜像
 FROM openjdk:8-jdk-alpine
+
+# 安装字体和字体配置
+RUN apk add --no-cache fontconfig ttf-dejavu
 
 # 从本地拷贝构建的结果
 COPY ./target/webchat.jar /opt/app.jar
@@ -8,7 +11,7 @@ COPY ./target/webchat.jar /opt/app.jar
 EXPOSE 8101
 
 # 设置容器启动时运行的命令
-ENTRYPOINT ["java","-jar","/opt/app.jar"]
+ENTRYPOINT ["java","-Djava.awt.headless=true","-jar","/opt/app.jar"]
 #=========================================这是在Docker打包【不推荐，在本地打好包后直接用上面的命令即可】================================================================
 # 第一阶段：使用 Maven 镜像进行构建
 #FROM maven:3.6.0-jdk-8-slim AS build
